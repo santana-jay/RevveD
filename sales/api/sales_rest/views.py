@@ -130,3 +130,63 @@ def api_customer(request, id=None):
                 {"message": "The customer does not exist"},
                 status=400
             )
+
+
+@require_http_methods(["GET", "POST", "DELETE"])
+def api_sale(request, id=None):
+    if request.method == "GET":
+        sales = Sale.objects.all()
+        return JsonResponse(
+            {"sales": sales},
+            encoder=SaleEncoder,
+            safe=False,
+        )
+    elif request.method == "POST":
+        try:
+            content = json.loads(request.body)
+
+            # retrieving related object using ID
+            # use vin for autombile??
+            # employee id for salesperson??
+            automobile_id = content.get("automobile")
+            salesperson_id = content.get("salesperson")
+            customer_id = content.get("customer")
+
+            # testing cases
+            automobile = AutomobileVO.objects.get(id=automobile_id)
+            salesperson = Salesperson.objects.get(id=salesperson_id)
+            customer = Customer.objects.get(id=customer_id)
+
+            # (**content)
+            sale = Sale.objects.create(
+                price=content.get("price"),
+                automobile=automobile,
+                salesperson=salesperson,
+                customer=customer
+            )
+
+            return JsonResponse(
+                sale,
+                encoder=SaleEncoder,
+                safe=False
+            )
+        except KeyError as e:
+            return JsonResponse(
+                {"message": "Key error occurred: " + str(e)},
+                status=400
+            )
+        except Sale.DoesNotExist:
+            return JsonResponse(
+                {"message": "That Sale object does not exist"},
+                status=400
+            )
+    elif request.method == "DELETE" and id is not None:
+        try:
+            sale = Sale.objects.get(id=id)
+            count, _ = sale.delete()
+            return JsonResponse({"Deleted": count > 0})
+        except Sale.DoesNotExist:
+            return JsonResponse(
+                {"message": "That Sale object does not exist"},
+                status=400
+        )
