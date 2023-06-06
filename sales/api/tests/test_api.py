@@ -28,7 +28,7 @@ class Tests(TransactionTestCase):
         self.assertEqual(response.status_code, 200, msg="Did not get a 200 OK for the path projects/")
 
     def test_sales_people_delete(self):
-        Salesperson.objects.create(first_name="first", last_name="last", employee_id=1)
+        Salesperson.objects.create(id=1, first_name="first", last_name="last", employee_id=1)
 
         client = Client()
         response = client.delete("/api/salespeople/1/")
