@@ -2,8 +2,8 @@
 
 Team:
 
-* Person 1 - Which microservice?
-* Person 2 - Which microservice?
+* Jay S- Which microservice? Service
+* Moses A - Which microservice? Sales
 
 ## Design
 
