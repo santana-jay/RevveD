@@ -14,8 +14,18 @@ class Technician(models.Model):
 
     # use the auto generated id and save it as the employee id
     def save(self, *args, **kwargs):
-        if not self.employee_id:
+        if not self.employee_id and self.first_name and self.last_name:
             self.employee_id = (self.first_name[0] + self.last_name).lower()
+
+        if self.employee_id:
+            base_employee_id = self.employee_id
+            counter = 1
+            employee_id = base_employee_id
+
+            while Technician.objects.filter(employee_id=employee_id).exists():
+                employee_id = f'{employee_id}_{counter}'
+                counter += 1
+            self.employee_id = employee_id
             super().save(*args, **kwargs)
 
 
