@@ -157,7 +157,7 @@ def api_sale(request, id=None):
 
             try:
                 automobile = AutomobileVO.objects.get(vin=automobile_vin)
-            except AutomobileVO.DoesNotExit:
+            except AutomobileVO.DoesNotExist:
                 return JsonResponse(
                     {"message": "Automobile does not exist"},
                     status=400,
@@ -214,3 +214,12 @@ def api_sale(request, id=None):
                 {"message": "That Sale object does not exist"},
                 status=400
             )
+
+# use useEffect!!!
+# encoder in a separater file
+# no commented out codes
+# when refresh load state using use effect
+# use setEffect outside fetchData
+# updating state in a component
+# rerender not remount
+# a way of updating state without rerendering
