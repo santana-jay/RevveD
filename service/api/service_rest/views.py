@@ -1,22 +1,23 @@
 from django.shortcuts import render
+from datetime import datetime
 from django.views.decorators.http import require_http_methods
 import json
 from django.http import JsonResponse
-from .encoders import AppointmentListEncoder
-from .models import Appointment, AutomobileVO, Technician
+from .models import Appointment, Technician
+from .encoders import (
+    AppointmentListEncoder,
+    AppointmentDetailEncoder,
+    TechnicianListEncoder
+    )
 
 # Create your views here.
-
-
-
 
 @require_http_methods(['GET', 'POST'])
 def list_appointments(request):
     if request.method == 'GET':
         try:
             appointments = Appointment.objects.all()
-            data = AppointmentListEncoder().encode(appointments)
-            return JsonResponse(data, safe=False)
+            return JsonResponse(appointments, encoder=AppointmentListEncoder, safe=False)
         except Exception as e:
             return JsonResponse({'error': str(e)}, 'Failed to get appointments', status=404)
     else:
@@ -24,13 +25,12 @@ def list_appointments(request):
             content = json.loads(request.body)
 
             if 'technician' in content:
-                tech_id = content['technician']
-                tech = Technician.objects.get(id=tech_id)
-                appointment = Appointment.objects.create(technician=tech, **content)
+                content['technician'] = Technician.objects.get(employee_id=content['technician'])
+                appointment = Appointment.objects.create(**content)
                 appointment.save()
                 return JsonResponse({'appointment': appointment}, encoder=AppointmentDetailEncoder, safe=False)
         except Exception as e:
-            return JsonResponse({'error': str(e)}, 'Failed to post appointment', status=400)
+            return JsonResponse({'error': str(e)}, status=400)
 
 
 @require_http_methods(['GET', 'PUT', 'DELETE'])

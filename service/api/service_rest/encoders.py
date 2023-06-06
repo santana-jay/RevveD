@@ -7,18 +7,20 @@ class AutomobileVODetailEncoder(ModelEncoder):
     model = AutomobileVO
     properties = ['vin', 'sold',]
 
-class AppointmentListEncoder(ModelEncoder):
-    model = Appointment
-    properties = ['date_time', 'customer', 'technician', 'vin']
-
-    encoders = {'vin': AutomobileVODetailEncoder}
+class TechnicianListEncoder(ModelEncoder):
+    model = Technician
+    properties = ['employee_id', 'first_name', 'last_name', 'id']
 
 class AppointmentDetailEncoder(ModelEncoder):
     model = Appointment
     properties = ['customer', 'date_time', 'reason', 'vin', 'technician', 'status']
 
-    encoders = {'vin': AutomobileVODetailEncoder}
+    encoders = {'technician': TechnicianListEncoder()}
 
-class TechnicianListEncoder(ModelEncoder):
-    model = Technician
-    properties = ['employee_id', 'first_name', 'last_name', 'id']
+
+class AppointmentListEncoder(ModelEncoder):
+    model = Appointment
+    properties = ['date_time', 'customer', 'technician', 'vin', 'id']
+
+    # encoders = {'technician': AutomobileVODetailEncoder()}
+    encoders = {'technician': TechnicianListEncoder()}
