@@ -47,13 +47,13 @@ class SaleEncoder(ModelEncoder):
     properties = [
         "price",
         "automobile",
-        "salesPerson",
+        "salesperson",
         "customer",
     ]
 
     encoders = {
         "automobile": AutomobileVOEncoder(),
-        "salesPerson": SalespersonEncoder(),
+        "salesperson": SalespersonEncoder(),
         "customer": CustomerEncoder(),
     }
 
@@ -94,3 +94,39 @@ def api_salesperson(request, id=None):
                 status=400
             )
 
+
+@require_http_methods(["GET", "POST", "DELETE"])
+def api_customer(request, id=None):
+    if request.method == "GET":
+        customer = Customer.objects.all()
+        return JsonResponse(
+            {"customer": customer},
+            encoder=CustomerEncoder,
+            safe=False
+        )
+    elif request.method == "POST":
+        try:
+            content = json.loads(request.body)
+            customer = Customer.objects.create(**content)
+            return JsonResponse(
+                customer,
+                encoder=CustomerEncoder,
+                safe=False
+            )
+        except TypeError as e:
+            return JsonResponse(
+                {"message": "Type error occurred: " + str(e)},
+                status=400
+            )
+    elif request.method == "DELETE" and id is not None:
+        try:
+            customer = Customer.objects.get(id=id)
+            count, _ = customer.delete()
+            return JsonResponse(
+                {'Deleted': count > 0}
+            )
+        except Customer.DoesNotExist:
+            return JsonResponse(
+                {"message": "The customer does not exist"},
+                status=400
+            )
