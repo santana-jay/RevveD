@@ -192,7 +192,7 @@ def api_sale(request, id=None):
         except KeyError as e:
             return JsonResponse(
                 {"message": "Key error occurred: " + str(e)},
-                status=400,
+                status=400, 
             )
         except Sale.DoesNotExist:
             return JsonResponse(

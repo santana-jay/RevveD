@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom"
 
 
 function CustomerList() {
     const [customers, setCustomers] = useState([]);
     const fetchData = async () => {
-        // const customerUrl = "http://localhost:8090/api/customers/"
-        // const response = await fetch(customerUrl);
-        const response = await fetch('http://localhost:8090/api/customers/'
-
-            );
+        const customerUrl = "http://localhost:8090/api/customers/"
+        const response = await fetch(customerUrl);
 
         if (response.ok) {
             const data = await response.json();
@@ -20,12 +18,16 @@ function CustomerList() {
         fetchData();
     }, []);
 
+
     return (
         <>
         <div className="container">
             <h1>Customer List</h1>
+                <p className="text-right">
+                    <Link to="/customers/form" className="btn btn-primary btrn-md">Create a New Customer</Link>
+                </p>
         </div>
-            <table className="table table striped">
+            <table className="table table-striped">
                 <thead>
                     <tr>
                         <th>First Name</th>

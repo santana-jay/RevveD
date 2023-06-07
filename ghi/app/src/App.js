@@ -3,6 +3,9 @@ import MainPage from './MainPage';
 import Nav from './Nav';
 import SalesPeopleList from "./Sales/SalesPeopleList"
 import CustomerList from "./Sales/CustomerList"
+import CustomerForm from "./Sales/CustomerForm"
+import SalesPeopleForm from "./Sales/SalesPeopleForm"
+import SalesList from "./Sales/SalesList"
 
 function App() {
   return (
@@ -12,12 +15,18 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
 
-          <Route path="sales">
+          <Route path="salespeople">
             <Route path="" element={<SalesPeopleList />} />
+            <Route path="form" element={<SalesPeopleForm />} />
           </Route>
 
           <Route path="customers">
             <Route path="" element={<CustomerList />} />
+            <Route path="form" element={<CustomerForm />} />
+          </Route>
+
+          <Route path="sales">
+            <Route path="" element={<SalesList />} />
           </Route>
 
         </Routes>
