@@ -148,9 +148,6 @@ def api_sale(request, id=None):
         try:
             content = json.loads(request.body)
 
-            # retrieving related object using ID
-            # use vin for autombile??
-            # employee id for salesperson??
             automobile_vin = content.get("automobile")
             salesperson_employee_id = content.get("salesperson")
             customer_id = content.get("customer")
