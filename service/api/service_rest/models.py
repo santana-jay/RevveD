@@ -18,7 +18,6 @@ class Technician(models.Model):
             self.employee_id = (self.first_name[0] + self.last_name).lower()
 
         if self.employee_id:
-            # base_employee_id = self.employee_id
             counter = 1
             employee_id = self.employee_id
 
