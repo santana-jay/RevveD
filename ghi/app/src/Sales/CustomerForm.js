@@ -52,7 +52,7 @@ function CustomerForm() {
         <div className="row">
             <div className="offset-3 col-6">
                 <div className="shadow p-4 mt-4">
-                    <h1 className="text-cent">Create a New Customer</h1>
+                    <h1 className="text-center">Create a New Customer</h1>
                     <form onSubmit={handleSubmit} id="create-customer-form">
                         <div className="form-floating mb-3">
                             <input
