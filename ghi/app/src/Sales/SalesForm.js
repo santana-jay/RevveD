@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 
 function SalesForm () {
     const [automobiles, setAutomobiles] = useState([]);
-    const [salespersons, setSalesperson] = useState([]);
+    const [salespeople, setSalespeople] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [selectedVin, setSelectedVin] = useState("");
     const [selectedSalesperson, setSelectedSalesperson] = useState("");
@@ -33,12 +33,12 @@ function SalesForm () {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const data = {
-            automobile: selectedVin,
-            salesperson: selectedSalesperson,
-            customer: selectedCustomer,
-            price: price,
-        };
+        const data = {}
+            data.automobile = selectedVin
+            data.salespeople = selectedSalesperson
+            data.customer = selectedCustomer
+            data.price = price
+
 
         const salesUrl = "http://localhost:8090/api/sales/";
         const fetchConfig = {
@@ -62,7 +62,8 @@ function SalesForm () {
             const response = await fetch(automobilesUrl);
             if (response.ok) {
                 const data = await response.json();
-                setAutomobiles(data.autos);
+                const filteredAutomobiles = data.autos.filter((automobile) => !automobile.sold);
+                setAutomobiles(filteredAutomobiles);
             }
         };
 
@@ -71,7 +72,8 @@ function SalesForm () {
             const response = await fetch(salespeopleUrl);
             if (response.ok) {
                 const data = await response.json();
-                setSalesperson(data.salespeople);
+                console.log("check here", data.salespeople)
+                setSalespeople(data.salespeople);
             }
         };
 
@@ -106,7 +108,7 @@ function SalesForm () {
                         className="form-select">
                     <option value="">Select a VIN</option>
                         {automobiles.map((automobile) => (
-                            <option key={automobile.id} value={automobile.vin}>
+                            <option key={automobile.vin} value={automobile.vin}>
                                 {automobile.vin}
                             </option>
                         ))}
@@ -120,8 +122,8 @@ function SalesForm () {
                         required id="salesperson"
                         className="form-select">
                     <option value="">Select a Salesperson</option>
-                        {salespersons.map((salesperson) => (
-                            <option key={salesperson.id} value={salesperson.id}>
+                        {salespeople.map((salesperson) => (
+                            <option key={salesperson.employee_id} value={salesperson.employee_id}>
                                 {salesperson.first_name} {salesperson.last_name}
                             </option>
                         ))}

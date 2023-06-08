@@ -149,11 +149,12 @@ def api_sale(request, id=None):
             content = json.loads(request.body)
 
             automobile_vin = content.get("automobile")
-            salesperson_employee_id = content.get("salesperson")
+            salesperson_employee_id = content.get("salespeople")
             customer_id = content.get("customer")
 
             try:
                 automobile = AutomobileVO.objects.get(vin=automobile_vin)
+                content["automobile"] = automobile
             except AutomobileVO.DoesNotExist:
                 return JsonResponse(
                     {"message": "Automobile does not exist"},
@@ -162,6 +163,7 @@ def api_sale(request, id=None):
 
             try:
                 salesperson = Salesperson.objects.get(employee_id=salesperson_employee_id)
+                content["salesperson"] = salesperson
             except Salesperson.DoesNotExist:
                 return JsonResponse(
                     {"message": "Sales Person does not exist"},
@@ -170,6 +172,7 @@ def api_sale(request, id=None):
 
             try:
                 customer = Customer.objects.get(id=customer_id)
+                content["customer"] = customer
             except Customer.DoesNotExist:
                 return JsonResponse(
                     {"message": "Customer does not exist"},
@@ -192,7 +195,7 @@ def api_sale(request, id=None):
         except KeyError as e:
             return JsonResponse(
                 {"message": "Key error occurred: " + str(e)},
-                status=400, 
+                status=400,
             )
         except Sale.DoesNotExist:
             return JsonResponse(
@@ -211,6 +214,18 @@ def api_sale(request, id=None):
                 {"message": "That Sale object does not exist"},
                 status=400
             )
+
+@require_http_methods(["GET"])
+def api_show_saleshistory(request, id):
+    if request.method == "GET":
+        salesperson = Salesperson.objects.get(id=id)
+        sales = Sale.objects.filter(salesperson=salesperson)
+        return JsonResponse(
+            sales,
+            encoder=SaleEncoder,
+            safe=False,
+        )
+
 
 # use useEffect!!!
 # encoder in a separater file

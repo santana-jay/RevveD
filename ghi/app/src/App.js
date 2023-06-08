@@ -1,12 +1,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './MainPage';
 import Nav from './Nav';
+
 import SalesPeopleList from "./Sales/SalesPeopleList"
+import SalesPeopleForm from "./Sales/SalesPeopleForm"
+import SalespersonHistory from "./Sales/SalespersonHistory"
+
 import CustomerList from "./Sales/CustomerList"
 import CustomerForm from "./Sales/CustomerForm"
-import SalesPeopleForm from "./Sales/SalesPeopleForm"
+
 import SalesList from "./Sales/SalesList"
 import SalesForm from "./Sales/SalesForm"
+
 
 function App() {
   return (
@@ -19,6 +24,7 @@ function App() {
           <Route path="salespeople">
             <Route path="" element={<SalesPeopleList />} />
             <Route path="form" element={<SalesPeopleForm />} />
+            <Route path="history" element={<SalespersonHistory />} />
           </Route>
 
           <Route path="customers">
