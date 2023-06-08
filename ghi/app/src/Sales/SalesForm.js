@@ -41,6 +41,8 @@ function SalesForm () {
 
 
         const salesUrl = "http://localhost:8090/api/sales/";
+        const automobileUrl = `http://localhost:8100/api/automobiles/${selectedVin}/`;
+
         const fetchConfig = {
             method: "POST",
             body: JSON.stringify(data),
@@ -49,12 +51,21 @@ function SalesForm () {
 
         const response = await fetch(salesUrl, fetchConfig);
         if (response.ok) {
+            const automobileUpdate = {sold: true}
+            const automobileUpdateConfig = {
+                method: "PUT",
+                body: JSON.stringify(automobileUpdate),
+                headers: { "Content-Type": "application/json" }
+            }
+            await fetch(automobileUrl, automobileUpdateConfig)
+
             setSelectedVin("");
             setSelectedSalesperson("");
             setSelectedCustomer("");
             setPrice("");
         }
-    };
+    }
+
 
     useEffect(() => {
         const fetchAutomobiles = async () => {

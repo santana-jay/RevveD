@@ -154,7 +154,6 @@ def api_sale(request, id=None):
 
             try:
                 automobile = AutomobileVO.objects.get(vin=automobile_vin)
-                content["automobile"] = automobile
             except AutomobileVO.DoesNotExist:
                 return JsonResponse(
                     {"message": "Automobile does not exist"},
@@ -163,7 +162,6 @@ def api_sale(request, id=None):
 
             try:
                 salesperson = Salesperson.objects.get(employee_id=salesperson_employee_id)
-                content["salesperson"] = salesperson
             except Salesperson.DoesNotExist:
                 return JsonResponse(
                     {"message": "Sales Person does not exist"},
@@ -172,7 +170,6 @@ def api_sale(request, id=None):
 
             try:
                 customer = Customer.objects.get(id=customer_id)
-                content["customer"] = customer
             except Customer.DoesNotExist:
                 return JsonResponse(
                     {"message": "Customer does not exist"},
