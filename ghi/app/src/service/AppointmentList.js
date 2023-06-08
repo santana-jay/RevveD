@@ -16,7 +16,7 @@ export default function AppointmentList(){
 
             setAppointments(filteredAppointments)
         }else{
-            console.error('failed to load data')
+            console.error('failed to load appointments')
         }
     }
 
@@ -68,9 +68,7 @@ export default function AppointmentList(){
     return (
         <>
             <div className='container'>
-                <div>
-                    <h1>Service Appointments</h1>
-                </div>
+                <h1>Service Appointments</h1>
                 <p className='text-right'>
                     <Link to='/appointments/form' className='btn btn-primary btrn-md'>New Appointment</Link>
                 </p>

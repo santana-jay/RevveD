@@ -22,7 +22,7 @@ class Technician(models.Model):
             employee_id = self.employee_id
 
             while Technician.objects.filter(employee_id=employee_id).exists():
-                employee_id = f'{employee_id}_{counter}'
+                employee_id = f'{employee_id}{counter}'
                 counter += 1
             self.employee_id = employee_id
             super().save(*args, **kwargs)
