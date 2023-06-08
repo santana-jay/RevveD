@@ -13,13 +13,13 @@ class TechnicianListEncoder(ModelEncoder):
 
 class AppointmentDetailEncoder(ModelEncoder):
     model = Appointment
-    properties = ['customer', 'date_time', 'reason', 'vin', 'technician', 'status']
+    properties = ['customer', 'date_time', 'reason', 'vin', 'is_vip', 'technician', 'status']
 
     encoders = {'technician': TechnicianListEncoder()}
 
 
 class AppointmentListEncoder(ModelEncoder):
     model = Appointment
-    properties = ['date_time', 'customer', 'technician', 'id']
+    properties = ['date_time', 'customer', 'technician', 'is_vip', 'status', 'date_time', 'reason', 'vin', 'id']
 
     encoders = {'technician': TechnicianListEncoder()}

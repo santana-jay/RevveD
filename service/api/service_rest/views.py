@@ -6,8 +6,11 @@ from .models import Appointment, Technician
 from .encoders import (
     AppointmentListEncoder,
     AppointmentDetailEncoder,
-    TechnicianListEncoder
+    TechnicianListEncoder,
     )
+
+
+
 
 # Create your views here.
 
@@ -16,7 +19,7 @@ def list_appointments(request):
     if request.method == 'GET':
         try:
             appointments = Appointment.objects.all()
-            return JsonResponse(appointments, encoder=AppointmentListEncoder, safe=False)
+            return JsonResponse({'appointments': appointments}, encoder=AppointmentListEncoder, safe=False)
         except Exception as e:
             return JsonResponse({'error': str(e)}, 'Failed to get appointments', status=404)
     else:

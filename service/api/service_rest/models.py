@@ -34,9 +34,17 @@ class Appointment(models.Model):
     status = models.CharField(max_length=200)
     vin = models.CharField(max_length=100)
     customer = models.CharField(max_length=200)
+    is_vip = models.BooleanField(default=False)
 
     technician = models.ForeignKey(
         Technician,
         related_name='appointments',
         on_delete=models.CASCADE
     )
+
+    def mark_as_vip(self):
+        auto = AutomobileVO.objects.get(vin=self.vin)
+
+        if auto.sold:
+            self.is_vip = True
+            self.save()
