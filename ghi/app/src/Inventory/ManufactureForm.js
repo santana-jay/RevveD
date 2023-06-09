@@ -45,7 +45,7 @@ function ManufactureForm() {
                                 required type="text"
                                 name='manufacturer' id="manufacturer"
                                 className="form-control" />
-                            <label htmlFor="manufacturer">Manufactur</label>
+                            <label htmlFor="manufacturer">Manufacture</label>
                         </div>
                         <div className="text-center">
                             <button className="btn btn-primary">Create</button>
