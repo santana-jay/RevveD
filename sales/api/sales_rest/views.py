@@ -96,7 +96,7 @@ def api_sale(request, id=None):
             content = json.loads(request.body)
 
             automobile_vin = content.get("automobile")
-            salesperson_employee_id = content.get("salesperson")
+            salesperson_id = content.get("salesperson")
             customer_id = content.get("customer")
 
             try:
@@ -108,7 +108,7 @@ def api_sale(request, id=None):
                 )
 
             try:
-                salesperson = Salesperson.objects.get(id=salesperson_employee_id)
+                salesperson = Salesperson.objects.get(id=salesperson_id)
             except Salesperson.DoesNotExist:
                 return JsonResponse(
                     {"message": "Sales Person does not exist"},
