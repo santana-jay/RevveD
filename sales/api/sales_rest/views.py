@@ -2,61 +2,10 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from common.json import ModelEncoder
 from django.views.decorators.http import require_http_methods
-from .models import (
-    AutomobileVO,
-    Salesperson,
-    Customer,
-    Sale,
-)
+from .models import AutomobileVO, Salesperson, Customer, Sale
+from .encoders import AutomobileVOEncoder, SalespersonEncoder, CustomerEncoder, SaleEncoder
+
 import json
-# Create your views here.
-
-
-class AutomobileVOEncoder(ModelEncoder):
-    model = AutomobileVO
-    properties = [
-        "vin",
-        "sold",
-        "import_href",
-        "id"
-    ]
-
-
-class SalespersonEncoder(ModelEncoder):
-    model = Salesperson
-    properties = [
-        "first_name",
-        "last_name",
-        "employee_id",
-        "id",
-    ]
-
-
-class CustomerEncoder(ModelEncoder):
-    model = Customer
-    properties = [
-        "first_name",
-        "last_name",
-        "address",
-        "phone_number",
-        "id",
-    ]
-
-
-class SaleEncoder(ModelEncoder):
-    model = Sale
-    properties = [
-        "price",
-        "automobile",
-        "salesperson",
-        "customer",
-    ]
-
-    encoders = {
-        "automobile": AutomobileVOEncoder(),
-        "salesperson": SalespersonEncoder(),
-        "customer": CustomerEncoder(),
-    }
 
 
 @require_http_methods(["GET", "POST", "DELETE"])
@@ -224,11 +173,3 @@ def api_show_saleshistory(request, id):
         )
 
 
-# use useEffect!!!
-# encoder in a separater file
-# no commented out codes
-# when refresh load state using use effect
-# use setEffect outside fetchData
-# updating state in a component
-# rerender not remount
-# a way of updating state without rerendering
