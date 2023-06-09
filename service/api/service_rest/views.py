@@ -41,10 +41,10 @@ def appointment_details(request, id):
 
     elif request.method == 'DELETE':
         try:
-            count, _ = Appointment.objects.filter(id=id).delete()
-            return JsonResponse({'deleted': count > 0})
+            count = Appointment.objects.get(id=id).delete()
+            return JsonResponse({'deleted': count})
         except Exception as e:
-            return JsonResponse({'error': str(e)}, 'Failed to delete appointment', status=404)
+            return JsonResponse({'error': str(e)}, status=400)
 
     else:
         try:
@@ -82,14 +82,17 @@ def list_technicians(request, id=None):
         techs = Technician.objects.all()
         return JsonResponse({'technicians': techs}, encoder=TechnicianListEncoder)
 
-    elif request.method == 'POST':
+    elif request.method == 'DELETE':
+        try:
+            count, _ = Technician.objects.filter(id=id).delete()
+            return JsonResponse({'deleted': count > 0})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=404)
+
+    else:
         try:
             content = json.loads(request.body)
             tech = Technician.objects.create(**content)
             return JsonResponse({'technician': tech}, encoder=TechnicianListEncoder, safe=False)
         except Exception as e:
             return JsonResponse({'error': str(e)}, 'Error creating technician', status=400)
-
-    else:
-        count, _ = Technician.objects.filter(id=id).delete()
-        return JsonResponse({'deleted': count > 0})

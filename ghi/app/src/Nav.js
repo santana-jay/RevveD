@@ -15,22 +15,22 @@ function Nav() {
             <Link className="nav-link text-white dropdown-toggle" to="inventory" type="button" data-bs-toggle="dropdown" aria-expanded="false">Inventory</Link>
               <ul className="dropdown-menu">
                 <li>
-                  <Link className="dropdown-item" to="inventory/manufacture/">View Manufacture List</Link>
+                  <Link className="dropdown-item" to="inventory/manufacturer/">View Manufacture List</Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="inventory/manufacture/form">Create a new Manufacture</Link>
+                  <Link className="dropdown-item" to="inventory/manufacturer/form">Create a new Manufacturer</Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="inventory/modellist/">View Model List</Link>
+                  <Link className="dropdown-item" to="inventory/model-list/">View Model List</Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="inventory/modellist/form">Create a new Model</Link>
+                  <Link className="dropdown-item" to="inventory/model-list/form">Create a new Model</Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="inventory/automobilelist/">View Automobile List</Link>
+                  <Link className="dropdown-item" to="inventory/automobile-list/">View Automobile List</Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="inventory/automobilelist/form">Create a new automobile</Link>
+                  <Link className="dropdown-item" to="inventory/automobile-list/form">Create a new automobile</Link>
                 </li>
               </ul>
             <Link className="nav-link text-white dropdown-toggle" to="sales" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sales</Link>
@@ -84,4 +84,3 @@ function Nav() {
 }
 
 export default Nav;
-

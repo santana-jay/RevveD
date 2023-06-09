@@ -29,12 +29,12 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="inventory">
-            <Route path="manufacture" element={<ManufactureList />} />
-            <Route path="manufacture/form" element={<ManufactureForm />} />
-            <Route path="modellist" element={<ModelList />} />
-            <Route path="modellist/form" element={<ModelForm />} />
-            <Route path="automobilelist" element={<AutomobileList />} />
-            <Route path="automobilelist/form" element={<AutomobileForm />} />
+            <Route path="manufacturer" element={<ManufactureList />} />
+            <Route path="manufacturer/form" element={<ManufactureForm />} />
+            <Route path="model-list" element={<ModelList />} />
+            <Route path="model-list/form" element={<ModelForm />} />
+            <Route path="automobile-list" element={<AutomobileList />} />
+            <Route path="automobile-list/form" element={<AutomobileForm />} />
           </Route>
           <Route path="salespeople">
             <Route path="" element={<SalesPeopleList />} />

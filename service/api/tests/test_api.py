@@ -30,10 +30,10 @@ class Tests(TransactionTestCase):
         self.assertEqual(response.status_code, 200, msg="Did not get a 200 OK for the path projects/")
 
     def test_sales_people_delete(self):
-        Technician.objects.create(first_name="first", last_name="last", employee_id=1)
+        technician =Technician.objects.create(first_name="first", last_name="last", employee_id=1)
 
         client = Client()
-        response = client.delete("/api/technicians/1")
+        response = client.delete(f"/api/technicians/{technician.id}")
         self.assertEqual(response.status_code, 200, msg="Did not get a 200 OK for technicians delete.")
 
         response = client.delete("/api/technicians/1/")
@@ -61,7 +61,7 @@ class Tests(TransactionTestCase):
             "reason":"broken glass. everywhere.",
             "vin":"2222",
             "customer":"Warren Longmire",
-            "technician":"1"
+            "technician": tech.id
         }
 
         response = client.post("/api/appointments/", json.dumps(body), content_type='application/json')
@@ -73,7 +73,7 @@ class Tests(TransactionTestCase):
 
     def test_appointment_delete(self):
         tech = Technician.objects.create(first_name="first", last_name="last", employee_id=1)
-        appointment = Appointment.objects.create(date_time="2023-04-20T14:39:00.000Z", reason="reason code 1", vin="2222", customer="Warren Longmire", technician=tech)
+        appointment = Appointment.objects.create(date_time="2023-04-20T14:39:00.000Z", reason="reason code 1", vin="2222", customer="Warren Longmire", technician=tech )
 
         client = Client()
         response = client.delete(f"/api/appointments/{appointment.id}")
