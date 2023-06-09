@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class AutomobileVO(models.Model):
-    vin = models.CharField(max_length=50, unique=True,)
+    vin = models.CharField(max_length=17, unique=True,)
     sold = models.BooleanField(default=False)
 
 
@@ -41,10 +41,3 @@ class Appointment(models.Model):
         related_name='appointments',
         on_delete=models.CASCADE
     )
-
-    def mark_as_vip(self):
-        auto = AutomobileVO.objects.get(vin=self.vin)
-
-        if auto.sold:
-            self.is_vip = True
-            self.save()

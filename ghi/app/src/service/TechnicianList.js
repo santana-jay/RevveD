@@ -24,7 +24,7 @@ export default function TechnicianList() {
             <div>
                 <h1>Technicians</h1>
                 <p className='text-right'>
-                    <Link to='/technician-form' className='btn btn-primary btrn-md'>Add a Technician</Link>
+                    <Link to='/technicians/form' className='btn btn-primary btrn-md'>Add a Technician</Link>
                 </p>
             </div>
             <table className='table table-striped'>

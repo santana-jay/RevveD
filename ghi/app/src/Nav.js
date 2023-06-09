@@ -9,7 +9,19 @@ function Nav() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul className="navbar-nav ms-auto flex-row">
+            <li className="nav-item m-3">
+              <NavLink className="nav-link active" aria-current="page" to="/appointments">Appointments List</NavLink>
+            </li>
+            <li className="nav-item m-3">
+              <NavLink className="nav-link active" aria-current="page" to="/appointments/form">Create an Appointment</NavLink>
+            </li>
+            <li className="nav-item m-3">
+              <NavLink className="nav-link active" aria-current="page" to="/technicians">Technicians List</NavLink>
+            </li>
+            <li className="nav-item m-3">
+              <NavLink className="nav-link active" aria-current="page" to="/appointments/form">Create a Technician</NavLink>
+            </li>
           </ul>
         </div>
       </div>

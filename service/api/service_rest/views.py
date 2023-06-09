@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 import json
 from django.http import JsonResponse
-from .models import Appointment, Technician
+from .models import Appointment, Technician, AutomobileVO
 from .encoders import (
     AppointmentListEncoder,
     AppointmentDetailEncoder,
@@ -25,12 +25,15 @@ def list_appointments(request):
     else:
         try:
             content = json.loads(request.body)
-            content['technician'] = Technician.objects.get(employee_id=content['technician'])
+            content['technician'] = Technician.objects.get(id=content['technician'])
+            if AutomobileVO.objects.filter(vin=content['vin']):
+                if AutomobileVO.objects.get(vin=content['vin']).sold == True:
+                    content['is_vip'] = True
             appointment = Appointment.objects.create(**content)
-            appointment.save()
             return JsonResponse({'appointment': appointment}, encoder=AppointmentDetailEncoder, safe=False)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)
+
 
 
 @require_http_methods(['GET', 'PUT', 'DELETE'])

@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react'
 const initialFormState = {
     vin: '',
     customer: '',
-    date_time: '',
+    date: '',
+    time: '',
     technician: '',
     reason: '',
 }
 
 export default function AppointmentForm() {
-    const [formData, setFormData] = useSate(initialFormState)
+    const [formData, setFormData] = useState(initialFormState)
     const [technicians, setTechnicians] = useState([])
 
     const fetchData = async () => {
@@ -28,11 +29,24 @@ export default function AppointmentForm() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        // combine both date and time fields into date_time field
+        // convert to toISOString()
+        const datetime = new Date(`${formData.date} ${formData.time}`).toISOString()
+
+        // update form data
+        const updateFormData = {
+            ...formData,
+            date_time: datetime
+        }
+
+        //remove the date and time fields from data being fetched
+        const {date, time, ...postData} = updateFormData
+
         let url = 'http://localhost:8080/api/appointments/'
 
         const fetchConfig = {
             method: 'post',
-            body: JSON.stringify(formData),
+            body: JSON.stringify(postData),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -58,7 +72,6 @@ export default function AppointmentForm() {
                         <h1>Create a Service Appointment</h1>
                         <form onSubmit={handleSubmit} id="appointment-form">
                             <div className="form-floating mb-3">
-                                {/* <!-- Each field in the form references the same function --> */}
                                 <input onChange={handleFormChange} placeholder="Vin" required type="vin" name="vin" id="vin" className="form-control" value={formData.vin} />
                                 <label htmlFor="vin">Enter VIN...</label>
                             </div>
@@ -67,24 +80,26 @@ export default function AppointmentForm() {
                                 <label htmlFor="customer">Customer name...</label>
                             </div>
                             <div className="form-floating mb-3">
-                                <input onChange={handleFormChange} placeholder="EmployeeID" type="text" name="employee_id" id="employee_id" className="form-control" value={formData.employee_id}/>
-                                <label htmlFor="employee_id">Employee ID...(optional)</label>
+                                <input onChange={handleFormChange} placeholder="mm/dd/yyyy" required type="date" name="date" id="date" className="form-control" value={formData.date}/>
+                                <label htmlFor="date">Date</label>
                             </div>
                             <div className="form-floating mb-3">
-                                <input onChange={handleFormChange} placeholder="EmployeeID" type="text" name="employee_id" id="employee_id" className="form-control" value={formData.employee_id}/>
-                                <label htmlFor="employee_id">Employee ID...(optional)</label>
+                                <input onChange={handleFormChange} placeholder="--:--" required type="time" name="time" id="time" className="form-control" value={formData.time}/>
+                                <label htmlFor="time">Time</label>
+                            </div>
+                            <div className="mb-3">
+                                <select onChange={handleFormChange} placeholder="Choose a technician" required name="technician" id="technician" className="form-control" value={formData.technician}>
+                                    <option value=''>Choose a technician...</option>
+                                    {technicians.map(technician => {
+                                        return (
+                                            <option key={technician.id} value={technician.id}>{technician.first_name} {technician.last_name}</option>
+                                        )
+                                    })}
+                                </select>
                             </div>
                             <div className="form-floating mb-3">
-                                <input onChange={handleFormChange} placeholder="EmployeeID" type="text" name="employee_id" id="employee_id" className="form-control" value={formData.employee_id}/>
-                                <label htmlFor="employee_id">Employee ID...(optional)</label>
-                            </div>
-                            <div className="form-floating mb-3">
-                                <input onChange={handleFormChange} placeholder="EmployeeID" type="text" name="employee_id" id="employee_id" className="form-control" value={formData.employee_id}/>
-                                <label htmlFor="employee_id">Employee ID...(optional)</label>
-                            </div>
-                            <div className="form-floating mb-3">
-                                <input onChange={handleFormChange} placeholder="EmployeeID" type="text" name="employee_id" id="employee_id" className="form-control" value={formData.employee_id}/>
-                                <label htmlFor="employee_id">Employee ID...(optional)</label>
+                                <input onChange={handleFormChange} placeholder="Reason" required type="text" name="reason" id="reason" className="form-control" value={formData.reason}/>
+                                <label htmlFor="reason">Reason</label>
                             </div>
                             <button className="btn btn-primary">Create</button>
                         </form>
