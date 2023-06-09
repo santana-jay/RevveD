@@ -24,7 +24,6 @@ export default function TechnicianForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log('submitted form', formData)
 
         const url = 'http://localhost:8080/api/technicians/'
 
