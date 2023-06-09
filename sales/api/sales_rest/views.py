@@ -1,10 +1,8 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from common.json import ModelEncoder
 from django.views.decorators.http import require_http_methods
 from .models import AutomobileVO, Salesperson, Customer, Sale
 from .encoders import AutomobileVOEncoder, SalespersonEncoder, CustomerEncoder, SaleEncoder
-
 import json
 
 
@@ -98,7 +96,7 @@ def api_sale(request, id=None):
             content = json.loads(request.body)
 
             automobile_vin = content.get("automobile")
-            salesperson_employee_id = content.get("salespeople")
+            salesperson_employee_id = content.get("salesperson")
             customer_id = content.get("customer")
 
             try:
@@ -110,7 +108,7 @@ def api_sale(request, id=None):
                 )
 
             try:
-                salesperson = Salesperson.objects.get(employee_id=salesperson_employee_id)
+                salesperson = Salesperson.objects.get(id=salesperson_employee_id)
             except Salesperson.DoesNotExist:
                 return JsonResponse(
                     {"message": "Sales Person does not exist"},
@@ -171,5 +169,3 @@ def api_show_saleshistory(request, id):
             encoder=SaleEncoder,
             safe=False,
         )
-
-

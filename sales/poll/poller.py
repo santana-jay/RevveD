@@ -26,6 +26,7 @@ def get_automobile():
             }
         )
 
+
 def poll(repeat=True):
     while True:
         print('Sales poller polling for data')

@@ -35,7 +35,7 @@ function SalesForm () {
 
         const data = {}
             data.automobile = selectedVin
-            data.salespeople = selectedSalesperson
+            data.salesperson = selectedSalesperson
             data.customer = selectedCustomer
             data.price = price
 
@@ -83,7 +83,6 @@ function SalesForm () {
             const response = await fetch(salespeopleUrl);
             if (response.ok) {
                 const data = await response.json();
-                console.log("check here", data.salespeople)
                 setSalespeople(data.salespeople);
             }
         };
@@ -133,9 +132,9 @@ function SalesForm () {
                         required id="salesperson"
                         className="form-select">
                     <option value="">Select a Salesperson</option>
-                        {salespeople.map((salesperson) => (
-                            <option key={salesperson.employee_id} value={salesperson.employee_id}>
-                                {salesperson.first_name} {salesperson.last_name}
+                        {salespeople.map((salesp) => (
+                            <option key={salesp.id} value={salesp.id}>
+                                {salesp.first_name} {salesp.last_name}
                             </option>
                         ))}
                     </select>
