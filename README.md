@@ -33,4 +33,4 @@ docker-compose up
 - Make a new project 
 - Within that project, click the Create dropdown at the top right and click File under IMPORT FROM
 - Select the Insomnia.yaml file from the project-beta folder and import
-- A new collection called **Shayne/Jordan CarCar** should show up, and that should contain **all of the RESTful API URLs and example inputs** to use for each microservice!
+
