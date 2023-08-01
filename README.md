@@ -15,6 +15,7 @@ Docker is used to run the application. To use the app, follow the steps for the 
 2. Clone the repository
 ```
 git clone
+```
 3. Change your working directory to the project's directory
 ```
 cd project-beta
